@@ -4,13 +4,15 @@ const request = require("request");
 const app = express();
 const port = 4000;
 
+let requestCounter = 0;
 app.all("*", async (req, res, next) => {
   try {
     console.log(req.url);
-    console.log("=======");
+    console.log("--");
     const url = req.url.substr(1);
     console.log(url);
-    console.log("#######");
+    requestCounter++;
+    if (requestCounter % 5000) console.log(requestCounter);
     req
       .pipe(request(url))
       .on("error", function (err) {
